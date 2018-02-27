@@ -10,7 +10,7 @@ const url = require('url');
 const Config = require('electron-config');
 const config = new Config();
 
-require('electron-debug')();
+require('electron-debug')({ enabled: true });
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
