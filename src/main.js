@@ -1,4 +1,6 @@
 const electron = require('electron');
+const DiscordRPC = require('discord-rpc');
+const startCase = require('lodash.startcase');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -18,7 +20,11 @@ let mainWindow;
 
 function createWindow () {
   // Create the browser window.
-  const opts = {show: false, icon: __dirname + '/favicon.ico' };
+  const opts = { 
+    show: false, 
+    icon: __dirname + '/favicon.ico'
+  };
+
   Object.assign(opts, config.get('winBounds'));
 
   if(!opts.height) opts.height = 768;
@@ -76,3 +82,42 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+const DISCORD_CLIENT_ID = '410478620096856064';
+
+DiscordRPC.register(DISCORD_CLIENT_ID);
+
+const startTimestamp = new Date();
+
+const rpc = new DiscordRPC.Client({ transport: 'ipc' });
+
+const setActivity = () => {
+  if(!rpc || !mainWindow) return;
+
+  mainWindow.webContents.executeJavaScript('document.querySelector("webview").getWebContents().executeJavaScript("window.discordGlobalCharacter")')
+    .then(function(char) {
+      if(!char) return;
+
+      rpc.setActivity({
+        startTimestamp,
+        state: char.partyName ? 'In The "' + char.partyName + '" Party' : 'Playing Solo',
+        details: 'In ' + startCase(char.map).split('Dungeon').join('(Dungeon)'),
+        largeImageKey: char._gameImage || 'game-image'
+      });
+    });
+    
+};
+
+rpc.on('ready', function() {
+  setActivity();
+
+  setInterval(function() {
+    setActivity();
+  }, 15000);
+});
+
+rpc
+  .login({ clientId: DISCORD_CLIENT_ID })
+  .catch(function(err) {
+    console.error(err);
+  });
