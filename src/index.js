@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, shell } = require('electron');
 const DiscordRPC = require('discord-rpc');
 const startCase = require('lodash.startcase');
 const path = require('path');
@@ -30,7 +30,8 @@ const createWindow = () => {
     ...opts,
     webPreferences: {
       webviewTag: true,
-      nodeIntegration: true
+      nodeIntegration: true,
+      nativeWindowOpen: true
     }
   });
 
@@ -69,6 +70,16 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+app.on('web-contents-created', (e, contents) => {
+  if(contents.getType() === 'webview') {
+
+    contents.addListener('will-navigate', (e, url) => {
+      e.preventDefault();
+      shell.openExternal(url);
+    });
+  }
+})
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
