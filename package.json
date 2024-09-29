@@ -9,7 +9,10 @@
   },
   "scripts": {
     "start": "electron . --serve",
-    "build": "electron-builder build --publish=never"
+    "build": "electron-builder build --publish=never",
+    "bump:patch": "npm version patch -m \"Release Patch %s\"",
+    "bump:minor": "npm version minor -m \"Release Minor %s\"",
+    "bump:major": "npm version major -m \"Release Major %s\""
   },
   "keywords": [],
   "author": {
