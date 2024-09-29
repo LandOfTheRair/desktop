@@ -1,15 +1,15 @@
 {
   "name": "lotr-desktop",
   "productName": "Land of the Rair",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "Land of the Rair Desktop Client",
   "main": "src/index.js",
+  "repository": {
+    "url": "https://github.com/LandOfTheRair/desktop"
+  },
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "start": "electron . --serve",
+    "build": "electron-builder build --publish=never"
   },
   "keywords": [],
   "author": {
@@ -17,52 +17,15 @@
     "email": "kyle@seiyria.com"
   },
   "license": "MIT",
-  "config": {
-    "forge": {
-      "packagerConfig": {
-        "appname": "Land of the Rair",
-        "icon": "./favicon.ico"
-      },
-      "electronWinstallerConfig": {
-        "name": "LandOfTheRair",
-        "iconUrl": "https://play.rair.land/favicon.ico"
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "lotr_desktop"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ]
-    }
-  },
   "dependencies": {
-    "discord-rpc": "^3.2.0",
+    "discord-rpc": "^4.0.1",
     "electron-config": "^2.0.0",
-    "electron-squirrel-startup": "^1.0.0",
+    "electron-squirrel-startup": "^1.0.1",
+    "electron-updater": "^6.3.4",
     "lodash.startcase": "^4.4.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.54",
-    "@electron-forge/maker-deb": "^6.0.0-beta.54",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.54",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
-    "@electron-forge/maker-zip": "^6.0.0-beta.54",
-    "electron": "13.6.6"
+    "electron": "32.1.2",
+    "electron-builder": "^25.0.5"
   }
 }

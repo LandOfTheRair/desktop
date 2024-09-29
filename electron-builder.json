@@ -1,0 +1,26 @@
+{
+  "asar": true,
+  "appId": "land.rair.play",
+  "productName": "Land of the Rair",
+  "directories": {
+    "output": "release/",
+    "buildResources": "../dist"
+  },
+  "files": [
+    "**/*",
+    "!**/*.ts",
+    "!*.map",
+    "!package.json",
+    "!package-lock.json",
+    {
+      "from": "../dist",
+      "filter": ["**/*"]
+    }
+  ],
+  "artifactName": "LandOfTheRair.${ext}",
+  "win": {
+    "icon": "icons",
+    "target": ["nsis"],
+    "publish": ["github"]
+  }
+}

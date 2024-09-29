@@ -2,6 +2,7 @@ const { app, BrowserWindow, shell } = require("electron");
 const DiscordRPC = require("discord-rpc");
 const startCase = require("lodash.startcase");
 const path = require("path");
+const { autoUpdater } = require("electron-updater");
 
 const Config = require("electron-config");
 const config = new Config();
@@ -36,7 +37,10 @@ const createWindow = () => {
   });
 
   mainWindow.setMenu(null);
-  mainWindow.once("ready-to-show", mainWindow.show);
+  mainWindow.once("ready-to-show", () => {
+    mainWindow.show();
+    autoUpdater.checkForUpdatesAndNotify();
+  });
 
   mainWindow.on("close", () => {
     config.set("winBounds", mainWindow.getBounds());
