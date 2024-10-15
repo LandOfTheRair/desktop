@@ -7,6 +7,10 @@ const { autoUpdater } = require("electron-updater");
 const Config = require("electron-config");
 const config = new Config();
 
+console.log(process.argv);
+
+const showDevTools = process.argv.includes("--dev");
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
   // eslint-disable-line global-require
@@ -50,7 +54,9 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, "index.html"));
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  if (showDevTools) {
+    mainWindow.webContents.openDevTools();
+  }
 };
 
 // This method will be called when Electron has finished
