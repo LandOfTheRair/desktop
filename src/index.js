@@ -89,6 +89,8 @@ app.on("web-contents-created", (e, contents) => {
     });
 
     contents.addListener("will-navigate", (e, url) => {
+      if (url.includes("clearCache")) return;
+
       e.preventDefault();
       shell.openExternal(url);
     });
