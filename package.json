@@ -1,7 +1,7 @@
 {
   "name": "lotr-desktop",
   "productName": "Land of the Rair",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Land of the Rair Desktop Client",
   "main": "src/index.js",
   "repository": {
