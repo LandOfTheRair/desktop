@@ -1,13 +1,12 @@
-const { app, BrowserWindow, shell } = require("electron");
+const { app, BrowserWindow, shell, protocol } = require("electron");
 const DiscordRPC = require("discord-rpc");
 const startCase = require("lodash.startcase");
 const path = require("path");
 const { autoUpdater } = require("electron-updater");
 
 const Config = require("electron-config");
+const { cacheInitialAssets, hijackAssetRequest } = require("./asset-cache");
 const config = new Config();
-
-console.log(process.argv);
 
 const showDevTools = process.argv.includes("--dev");
 
@@ -20,6 +19,8 @@ if (require("electron-squirrel-startup")) {
 let mainWindow;
 
 const createWindow = () => {
+  cacheInitialAssets();
+
   const opts = {
     show: false,
     icon: __dirname + "/favicon.ico",
