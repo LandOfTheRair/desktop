@@ -1,5 +1,5 @@
 {
-  "asar": true,
+  "asar": false,
   "appId": "land.rair.play",
   "productName": "Land of the Rair",
   "directories": {

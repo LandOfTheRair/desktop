@@ -25,7 +25,6 @@
     "electron-config": "^2.0.0",
     "electron-squirrel-startup": "^1.0.1",
     "electron-updater": "^6.3.4",
-    "fs-extra": "^11.3.2",
     "lodash.startcase": "^4.4.0",
     "md5-file": "^5.0.0"
   },

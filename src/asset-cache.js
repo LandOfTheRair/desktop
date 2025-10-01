@@ -1,12 +1,13 @@
 const { app, net, protocol } = require("electron");
-const fs = require("fs-extra");
 const md5 = require("md5-file");
+
+const fs = require("fs");
 const path = require("path");
-const { pathToFileURL } = require("node:url");
+const { pathToFileURL } = require("url");
 
 const assetDir = `${app.getAppPath()}/assets`;
 
-fs.ensureDirSync(assetDir);
+fs.mkdirSync(assetDir, { recursive: true });
 
 app.whenReady().then(() => {
   protocol.handle("rairasset", (request) => {
@@ -25,7 +26,7 @@ app.whenReady().then(() => {
   });
 });
 
-exports.cacheInitialAssets = async () => {
+app.whenReady().then(async () => {
   const assetsToCache = await fetch(
     "https://play.rair.land/assets/generated/all-hashes.json"
   );
@@ -51,9 +52,9 @@ exports.cacheInitialAssets = async () => {
     const response = await fetch(url);
     const buffer = await response.arrayBuffer();
 
-    fs.ensureDirSync(fullPath);
+    fs.mkdirSync(path.dirname(finalFilePath), { recursive: true });
     fs.writeFileSync(finalFilePath, Buffer.from(buffer));
 
     console.info(`Cached asset: ${assetDir}/${key}@${hash}`);
   });
-};
+});

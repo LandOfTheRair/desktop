@@ -5,7 +5,6 @@ const path = require("path");
 const { autoUpdater } = require("electron-updater");
 
 const Config = require("electron-config");
-const { cacheInitialAssets, hijackAssetRequest } = require("./asset-cache");
 const config = new Config();
 
 const showDevTools = process.argv.includes("--dev");
@@ -19,7 +18,7 @@ if (require("electron-squirrel-startup")) {
 let mainWindow;
 
 const createWindow = () => {
-  cacheInitialAssets();
+  require("./asset-cache");
 
   const opts = {
     show: false,
